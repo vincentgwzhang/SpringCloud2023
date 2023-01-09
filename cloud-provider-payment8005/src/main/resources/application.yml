@@ -1,0 +1,14 @@
+server:
+  port: 8005
+
+spring:
+  application:
+    name: CLOUD-PAYMENT-SERVICE
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+  main:
+    banner-mode: off

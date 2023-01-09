@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  consul:
+    container_name: consul
+    image: consul:latest
+    ports:
+      - 8500:8500
+    networks:
+      - spring-cloud-network
+networks:
+  spring-cloud-network:
+    driver: bridge
