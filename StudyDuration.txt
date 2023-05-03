@@ -1,0 +1,248 @@
+Scenario 1:
+***********************************************************************
+Components related:
+cloud-provider-payment8001, cloud-provider-payment8002 [cluster, source code are similar]
+cloud-consumer-order9001
+cloud-eureka-server7001, cloud-eureka-server7002, cloud-eureka-server7003
+***********************************************************************
+[cloud-provider-payment8001] is for create payment and retrieve
+[cloud-consumer-order9001]   is for calling [cloud-provider-payment8001] to create payment and retrieve
+
+The next step, is build the [cloud-eureka-server7001],
+then [cloud-provider-payment8001] registry to [cloud-eureka-server7001]
+then [cloud-consumer-order9001]   find [cloud-provider-payment8001] though [cloud-eureka-server7001]
+
+Steps:
+1, Start eureka
+2, In eureka, active [cloud-provider-payment8001]
+3, Eureka gets the service name of [cloud-provider-payment8001], and its actual IP
+4, [cloud-consumer-order9001] get service name of [cloud-provider-payment8001] and remember its actual IP
+5, [cloud-consumer-order9001] get actual IP of [cloud-provider-payment8001] every 30 seconds
+
+
+The next step, is build the [cloud-eureka-server7002],
+and then [cloud-eureka-server7001] and [cloud-eureka-server7002], [cloud-eureka-server7003] point to each other
+and then all the other service, like [cloud-provider-payment8001], [cloud-provider-payment8002], [cloud-consumer-order9001] point to both eureka server
+================================================================================================================
+
+
+
+
+Scenario 2:
+1, First need to download a zookeeper and start it.
+
+可以用 Docker 也可以下载，下载以后，记得在 /config 文件夹下把 sample_zoo.cfg 先变成 zoo.cfg
+然后运行命令: ./zkServer.sh start
+
+2, [cloud-provider-payment8003], [cloud-provider-payment8004] is to connect zookeeper as service discovery
+3, [cloud-consumer-order9002]   is to connect zookeeper as consumer
+PS:
+-- In the pom.xml file, must notice that your zookeeper lib version must align with zookeeper server version
+-- In console, after type ./zkCli.sh, you could see:
+```[zk: localhost:2181(CONNECTED) 5] ls /services
+[cloud-provider-payment]
+
+[zk: localhost:2181(CONNECTED) 8] get /services/cloud-provider-payment/d03cf703-6188-4220-b65f-7ef76724bdd0
+{"name":"cloud-provider-payment","id":"d03cf703-6188-4220-b65f-7ef76724bdd0","address":"localhost","port":8004,"sslPort":null,"payload":{"@class":"org.springframework.cloud.zookeeper.discovery.ZookeeperInstance","id":"cloud-provider-payment","name":"cloud-provider-payment","metadata":{"instance_status":"UP"}},"registrationTimeUTC":1648429780320,"serviceType":"DYNAMIC","uriSpec":{"parts":[{"value":"scheme","variable":true},{"value":"://","variable":false},{"value":"address","variable":true},{"value":":","variable":false},{"value":"port","variable":true}]}}```
+================================================================================================================
+
+
+
+
+
+Scenario 3:
+1, First need to download a consul and start it.
+
+可以用 Docker 也可以直接下载，下载以后，运行的命令是: ./consul agent -dev -node machine
+Web 界面: localhost:8500
+
+2, [cloud-provider-payment8005], [cloud-provider-payment8006] is to connect consul as service discovery
+3, [cloud-consumerconsul-order9003]   is to connect consul as consumer
+================================================================================================================
+
+Comparison:
+Eureka      AP
+Consul      CP
+Zookeeper   CP
+================================================================================================================
+
+
+
+**********************************  OpenFeign  **********************************
+Scenario 4: https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/
+1, [cloud-consumer-order9004] use OpenFeign and Eureka
+2, [cloud-provider-payment8001] and [cloud-provider-payment8002] could be triggered to be called
+3, [cloud-eureka-server7001], [cloud-eureka-server7002], and [cloud-eureka-server7003] run to be service discover as well
+
+PS: [cloud-consumer-order9005] use OpenFeign and Eureka, and use for detail study OpenFeign
+================================================================================================================
+
+
+
+
+
+
+Scenario 5:
+[resilience4j-demo] is independent, no rely on any service discover, no rely on other calling
+Just demo for resilience4j
+================================================================================================================
+
+
+
+Scenario 6:
+1, [cloud-provider-payment8001] and [cloud-provider-payment8002] provide gateway port
+2, Connecting to [cloud-eureka-server700*]
+3, [cloud-gateway9527] is showing how to do the gateway
+================================================================================================================
+
+
+Scenario 7:
+Spring Cloud Config ==> Enterprise level
+1, [cloud-eureka-server700*] build service discover
+2, [cloud-config-center-3344] build as config server
+3, [cloud-config-client-3355], [cloud-config-client-3366] connect to config server, to read additional properties
+
+PS: 其他所有的Application 可以像 [cloud-config-client-3355], [cloud-config-client-3366] 一样问 [cloud-config-center-3344] 要配置
+================================================================================================================
+
+
+Scenario 8:
+Spring Cloud Bus. No we need to two solution to dynamic refresh remote git file, and effect to [cloud-config-client-3355/3366]
+1, [cloud-eureka-server700*] build service discover
+2, [cloud-config-center-3344] build as config server
+3, [cloud-config-client-3355] and [cloud-config-client-3366] connect to config server, to read additional properties
+4, It is required to create a standard RabbitMQ service
+```
+docker run -d -p 5672:5672 -p 15672:15672 --name rabbitmq rabbitmq:3-management
+```
+
+Solution 1: Each of the application, we send a post request, like: curl --location --request POST 'localhost:3355/actuator/refresh'
+Solution 2: Send request to config server, like: curl --location --request POST 'localhost:3344/actuator/busrefresh' in one time
+Solution 3: It is also able to notify only one set of service, not all. Like:
+```
+curl --location --request POST 'localhost:3344/actuator/busrefresh/cloud-config-client-3366'
+
+[cloud-config-client-3366] is application name, if has the same application name, then format could be:
+
+cloud-config-client-3366:3366 ==> application name : port, for example:
+curl --location --request POST 'localhost:3344/actuator/busrefresh/cloud-config-client-3366:3366'
+```
+================================================================================================================
+
+
+
+
+
+
+Scenario 9:
+Spring cloud stream is a framework for event-driven, hiding with RabbitMQ, Kafka, ActiveMQ, RocketMQ etc streaming software
+And you don't know what it is behind when you develop it with
+
+Original Design:
+Message -> MessageChannel ::   SubscribableChannel :: MessageHandler
+
+Spring Cloud Stream:
+RabbitMQ :: [[[Input Binding === Spring Cloud Stream :: Output Binding]]] :: Kafka
+
+************************************
+Kafka: topic
+RabbitMQ: Exchanger
+************************************
+
+
+@Input: Input channel
+@Output: Output channel
+@StreamListener: Listener
+@EnableBiding: bind channel and exchange
+
+Spring Cloud Stream common annotation:
+
+---Scenario 9.1
+[cloud-eureka-server700*] Do the service discover
+Open RabbitMQ client
+[cloud-stream-rabbitmq-provider8801] Do the message sender
+===> Assume that we can see message sent in localhost:15672 and exchanger tab
+
+PS:
+
+Function<Object, Object> is used for received from channel and send to another channel
+Supplier<Object>         is used for send to channel by internal
+StreamBridge             is used for send to channel by manual
+
+
+[cloud-stream-kafka-provider8802] Is for Kafka
+
+PS:
+[cloud-stream-rabbitmq-provider8801] and [cloud-stream-kafka-provider8802] is standalone, you only need to start any
+of either one, plus [cloud-eureka-server700*], there would be producer and consumer inside
+
+
+
+---Scenario 9.2
+[cloud-eureka-server700*] Do the service discover
+[cloud-stream-rabbitmq-receiver8811] and [cloud-stream-rabbitmq-receiver8812] is for consumer group
+[cloud-stream-rabbitmq-publisher8810] is for sending message
+
+假如本身 cloud-stream-rabbitmq-receiver8811 是有 group 的，但是重启前删除 group, 那么就会造成重启后由于没有定位，所以无法接受 cloud-stream-rabbitmq-receiver8811 在停止服务期 rabbitMQ 发送出来的信息
+================================================================================================================
+
+
+
+
+
+
+
+
+Scenario 10
+docker run -d -p 9411:9411 openzipkin/zipkin
+1, [cloud-eureka-server700*] Do the service discover
+2, [cloud-provider-payment8001] and [cloud-provider-payment8002] could be triggered to be called
+3, [cloud-consumer-order9001]
+================================================================================================================
+
+
+PS:
+1)
+    <dependency>
+      <groupId>org.hibernate.validator</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>6.2.2.Final</version>
+      <scope>compile</scope>
+    </dependency>
+
+    up to 7 would not work, so in future, please use
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+
+2) spring:
+     jpa.properties.hibernate.id.new_generator_mappings: false would avoid
+     # avoid throw message "Table 'DBNAME.hibernate_sequence' doesn't exist" error
+
+3) Remember following must add <version>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    <release>17</release>
+                    <compilerArgs>--enable-preview</compilerArgs>
+                </configuration>
+            </plugin>
+
+4) Spring Cloud Netflix will not use Robbin after version 3.

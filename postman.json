@@ -1,0 +1,650 @@
+{
+	"info": {
+		"_postman_id": "a1cca94d-fdee-48db-807e-485684c6fbdd",
+		"name": "SpringCloud2023",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "123549"
+	},
+	"item": [
+		{
+			"name": "Example01",
+			"item": [
+				{
+					"name": "Payment/Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"serial\": \"vi1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8001/payment/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"payment",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payment/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8001/payment/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"payment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payment/discovery",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8001/payment/discovery",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"payment",
+								"discovery"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "order/create_payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"serial\": \"vi5\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9001/order/create_payment",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"order",
+								"create_payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "order/{id}",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:9001/order/3",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"order",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Example2",
+			"item": [
+				{
+					"name": "/consumer/discovery/client",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9002/consumer/discovery/client",
+							"host": [
+								"localhost"
+							],
+							"port": "9002",
+							"path": [
+								"consumer",
+								"discovery",
+								"client"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/consumer/payment/zk",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9002/consumer/payment/zk",
+							"host": [
+								"localhost"
+							],
+							"port": "9002",
+							"path": [
+								"consumer",
+								"payment",
+								"zk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/payment/zk/8003",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8003/payment/zk",
+							"host": [
+								"localhost"
+							],
+							"port": "8003",
+							"path": [
+								"payment",
+								"zk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/payment/zk/8004",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8004/payment/zk",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"payment",
+								"zk"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Example3",
+			"item": [
+				{
+					"name": "/payment/consul8005",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8005/payment/consul",
+							"host": [
+								"localhost"
+							],
+							"port": "8005",
+							"path": [
+								"payment",
+								"consul"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/payment/consul8006",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8006/payment/consul",
+							"host": [
+								"localhost"
+							],
+							"port": "8006",
+							"path": [
+								"payment",
+								"consul"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/consumer/payment/consul",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9003/consumer/payment/consul",
+							"host": [
+								"localhost"
+							],
+							"port": "9003",
+							"path": [
+								"consumer",
+								"payment",
+								"consul"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Example4",
+			"item": [
+				{
+					"name": "/consumer/payment/{id} 9004",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9004/consumer/payment/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9004",
+							"path": [
+								"consumer",
+								"payment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/consumer/payment/{id} 9005",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9005/consumer/payment/feign/timeout",
+							"host": [
+								"localhost"
+							],
+							"port": "9005",
+							"path": [
+								"consumer",
+								"payment",
+								"feign",
+								"timeout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/consumer/payment/{id} 9005 Error",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9005/consumer/payment/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9005",
+							"path": [
+								"consumer",
+								"payment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Example5",
+			"item": [
+				{
+					"name": "resilience4j/testCBRecordExceptions/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8007/resilience4j/testCBRecordExceptions/1122",
+							"host": [
+								"localhost"
+							],
+							"port": "8007",
+							"path": [
+								"resilience4j",
+								"testCBRecordExceptions",
+								"1122"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "rabbitmq-provider8801",
+			"item": [
+				{
+					"name": "Send by StreamBridge",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8801/sendMessage",
+							"host": [
+								"localhost"
+							],
+							"port": "8801",
+							"path": [
+								"sendMessage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send by Function",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8801/sendByFunction",
+							"host": [
+								"localhost"
+							],
+							"port": "8801",
+							"path": [
+								"sendByFunction"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "rabbitmq-publisher8810",
+			"item": [
+				{
+					"name": "Send Message",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8810/sendMessage",
+							"host": [
+								"localhost"
+							],
+							"port": "8810",
+							"path": [
+								"sendMessage"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GatewayScenario",
+			"item": [
+				{
+					"name": "Test 1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9527/gateway/gw1/test1?uname=vincent",
+							"host": [
+								"localhost"
+							],
+							"port": "9527",
+							"path": [
+								"gateway",
+								"gw1",
+								"test1"
+							],
+							"query": [
+								{
+									"key": "uname",
+									"value": "vincent"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test 2",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Request-Id",
+								"value": "1234",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:9527/gateway/gw2/test2?uname=vincent",
+							"host": [
+								"localhost"
+							],
+							"port": "9527",
+							"path": [
+								"gateway",
+								"gw2",
+								"test2"
+							],
+							"query": [
+								{
+									"key": "uname",
+									"value": "vincent"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test 3",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Request-Id",
+								"value": "1234",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:9527/gateway/gw3/test2?uname=vincent",
+							"host": [
+								"localhost"
+							],
+							"port": "9527",
+							"path": [
+								"gateway",
+								"gw3",
+								"test2"
+							],
+							"query": [
+								{
+									"key": "uname",
+									"value": "vincent"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Config",
+			"item": [
+				{
+					"name": "ConfigServer - read app1-dev1.yml",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://config-3344.com:3344/master/app1-dev1.yml",
+							"protocol": "http",
+							"host": [
+								"config-3344",
+								"com"
+							],
+							"port": "3344",
+							"path": [
+								"master",
+								"app1-dev1.yml"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ConfigServer - read app1-prod1.yml",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://config-3344.com:3344/master/app1-prod1.yml",
+							"protocol": "http",
+							"host": [
+								"config-3344",
+								"com"
+							],
+							"port": "3344",
+							"path": [
+								"master",
+								"app1-prod1.yml"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ConfigServer - read app1-testing1.yml",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://config-3344.com:3344/master/app1-testing1.yml",
+							"protocol": "http",
+							"host": [
+								"config-3344",
+								"com"
+							],
+							"port": "3344",
+							"path": [
+								"master",
+								"app1-testing1.yml"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Config client  1 - access configInfo endpoint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3355/configInfo",
+							"host": [
+								"localhost"
+							],
+							"port": "3355",
+							"path": [
+								"configInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Config client  2 - access configInfo endpoint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3366/configInfo",
+							"host": [
+								"localhost"
+							],
+							"port": "3366",
+							"path": [
+								"configInfo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

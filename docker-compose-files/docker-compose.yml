@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  consul:
+    container_name: consul
+    image: consul:latest
+    ports:
+      - 8500:8500
+    networks:
+      - spring-cloud-network
+      -
+  zookeeper:
+    container_name: zookeeper
+    image: zookeeper:latest
+    ports:
+      - 2181:2181
+    networks:
+      - spring-cloud-network
+networks:
+  spring-cloud-network:
+    driver: bridge

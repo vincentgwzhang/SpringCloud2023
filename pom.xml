@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.0.6</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.example</groupId>
+    <artifactId>springcloud2023</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>SpringCloud2023</name>
+    <description>SpringCloud2023</description>
+
+    <modules>
+        <module>cloud-provider-payment8001</module>
+        <module>cloud-api-commons</module>
+        <module>cloud-consumer-order9001</module>
+        <module>cloud-eureka-server7001</module>
+        <module>cloud-eureka-server7002</module>
+        <module>cloud-eureka-server7003</module>
+        <module>cloud-provider-payment8002</module>
+        <module>cloud-provider-payment8004</module>
+        <module>cloud-consumer-order9002</module>
+        <module>cloud-provider-payment8003</module>
+        <module>cloud-provider-payment8005</module>
+        <module>cloud-provider-payment8006</module>
+        <module>cloud-consumer-order9003</module>
+        <module>cloud-consumer-order9004</module>
+        <module>cloud-gateway9527</module>
+        <module>cloud-config-center-3344</module>
+        <module>cloud-config-client-3355</module>
+        <module>cloud-config-client-3366</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <java.version>17</java.version>
+
+        <spring.cloud.version>2022.0.2</spring.cloud.version>
+        <spring.boot.version>3.0.1</spring.boot.version>
+        <mapstruct.version>1.5.3.Final</mapstruct.version>
+        <zookeeper.version>3.8.1</zookeeper.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>${zookeeper.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
